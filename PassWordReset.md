@@ -11,6 +11,8 @@ flowchart TD
     subgraph ユーザー
         start([開始])
         inputCredentials[ユーザID・メールアドレスを入力]
+        returnToken([送信されてきたメールからトークンを返す])
+        inputNewPassword([新しいパスワードを入力する])
     end
 
     subgraph システム
@@ -21,6 +23,7 @@ flowchart TD
         showMismatchError[入力情報不一致エラーを出力]
         checkTokenReturned{送信したメールからトークンが返ってきたか?}
         resetPasswordAndShowForm[パスワードをリセットし、再設定画面を表示]
+        applyPasswordAndID([ユーザID、メールアドレスと紐づけを行う])
         discardInputAndExit[入力情報を破棄し、終了する]
     end
 
@@ -32,9 +35,12 @@ flowchart TD
     checkEmailMatch -- yes --> sendResetEmail
     checkEmailMatch -- no --> showMismatchError
     showMismatchError --> endMismatch([●])
-    sendResetEmail --> checkTokenReturned
+    sendResetEmail --> returnToken
+    returnToken -->checkTokenReturned
     checkTokenReturned -- yes --> resetPasswordAndShowForm
+    resetPasswordAndShowForm --> inputNewPassword
+    inputNewPassword --> applyPasswordAndID
     checkTokenReturned -- no --> discardInputAndExit
-    resetPasswordAndShowForm --> endSuccess([●])
+   applyPasswordAndID --> endSuccess([●])
     discardInputAndExit --> endDiscard([●])
 ```

@@ -6,35 +6,35 @@ Mermaid記法を用いたUMLのテスト置き場です
 
 ```mermaid
 flowchart TD
-    Start([●]) --> A
+    initialNode([●]) --> start
 
     subgraph ユーザー
-        A([開始])
-        C[ユーザID・メールアドレスを入力]
+        start([開始])
+        inputCredentials[ユーザID・メールアドレスを入力]
     end
 
     subgraph システム
-        B{非ログイン状態であるか?}
-        D[パスワード変更機能への案内を表示]
-        E{ユーザIDと登録されたメールアドレスが一致するか?}
-        F[登録されたメールアドレスにパスワードリセット申請メールを送信]
-        G[入力情報不一致エラーを出力]
-        H{送信したメールからトークンが返ってきたか?}
-        I[パスワードをリセットし、再設定画面を表示]
-        J[入力情報を破棄し、終了する]
+        checkNotLoggedIn{非ログイン状態であるか?}
+        showChangePasswordGuide[パスワード変更機能への案内を表示]
+        checkEmailMatch{ユーザIDと登録されたメールアドレスが一致するか?}
+        sendResetEmail[登録されたメールアドレスにパスワードリセット申請メールを送信]
+        showMismatchError[入力情報不一致エラーを出力]
+        checkTokenReturned{送信したメールからトークンが返ってきたか?}
+        resetPasswordAndShowForm[パスワードをリセットし、再設定画面を表示]
+        discardInputAndExit[入力情報を破棄し、終了する]
     end
 
-    A --> B
-    B -- yes --> C
-    B -- no --> D
-    D --> End1([●])
-    C --> E
-    E -- yes --> F
-    E -- no --> G
-    G --> End2([●])
-    F --> H
-    H -- yes --> I
-    H -- no --> J
-    I --> End3([●])
-    J --> End4([●])
+    start --> checkNotLoggedIn
+    checkNotLoggedIn -- yes --> inputCredentials
+    checkNotLoggedIn -- no --> showChangePasswordGuide
+    showChangePasswordGuide --> endGuide([●])
+    inputCredentials --> checkEmailMatch
+    checkEmailMatch -- yes --> sendResetEmail
+    checkEmailMatch -- no --> showMismatchError
+    showMismatchError --> endMismatch([●])
+    sendResetEmail --> checkTokenReturned
+    checkTokenReturned -- yes --> resetPasswordAndShowForm
+    checkTokenReturned -- no --> discardInputAndExit
+    resetPasswordAndShowForm --> endSuccess([●])
+    discardInputAndExit --> endDiscard([●])
 ```

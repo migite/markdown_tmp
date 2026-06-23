@@ -3,6 +3,8 @@ Mermaid記法を用いたUMLのテスト置き場です
 
 ## アクティビティ図
 ### パスワードリセット機能
+
+```mermaid
 flowchart TD
     Start([●]) --> A
 
@@ -35,3 +37,4 @@ flowchart TD
     H -- no --> J
     I --> End3([●])
     J --> End4([●])
+```

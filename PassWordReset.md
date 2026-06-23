@@ -10,7 +10,7 @@ flowchart TD
 
     subgraph ユーザー
         start([開始])
-        inputCredentials[ユーザID・メールアドレスを入力]
+        inputCredentials([ユーザID・メールアドレスを入力])
         returnToken([送信されてきたメールからトークンを返す])
         inputNewPassword([新しいパスワードを入力する])
     end

@@ -1,6 +1,8 @@
 # markdown_tmp
 Mermaid記法を用いたUMLのテスト置き場です
 
+## アクティビティ図
+### パスワードリセット機能
 ```mermaid
 flowchart TD
     Init([●]) --> A([開始])
